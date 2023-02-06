@@ -4,19 +4,23 @@ import style from './TodoListItem.module.css';
 
 var remove = '\u2718';
 
-const TodoListItem = ({ todo, onRemoveTodo }) => {
+const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo }) => {
    
     return (
         <>
             {/* <td>{<Checkbox className={style.checkbox__styled} /> || todo.fields.completed}</td> */}
-                <td><Checkbox className={style.checkbox__styled}/></td>
-            <td className={style.todoListItem}
-                // contentEditable='true'
-                // onInput={e => console.log('text inside div', e.currentTarget.textContent)}
-            >
-                {todo.title || todo.fields.title}
+            <td><Checkbox className={style.checkbox__styled}/></td>
+            <td className={style.todoListItem}>{todo.title || todo.fields.Title}</td>
+            <td className={style.todoListItem}>{todo.note || todo.fields.Note}</td>
+            <td>
+                <button 
+                    className={style.editButton} 
+                    type="button" 
+                    onClick={() => onUpdateTodo(todo.id)}
+                >
+                    Edit
+                </button>
             </td>
-            <td className={style.todoListItem}>{todo.todoNote || todo.fields.note}</td>
             <td>
                 <button 
                     className={style.buttons} 

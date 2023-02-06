@@ -17,7 +17,6 @@ button:hover {
 }
 
 .app__wrapper img {
-    /* position: relative; */
     width: 12rem;
 }
 
@@ -44,11 +43,11 @@ td, th, h1 {
     margin: 10px;
 }
 
-table td:nth-child(1), td:nth-child(4) {
+table td:nth-child(1), td:nth-child(4), td:nth-child(5) {
     border: none;
 }
 
-tbody th:nth-child(2), th:nth-child(3), th:nth-child(1), th:nth-child(4) {
+tbody th:nth-child(1), th:nth-child(2), th:nth-child(3), th:nth-child(4), th:nth-child(5) {
     background-color: #3E505B;
     color: white;
 }

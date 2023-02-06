@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import './InputWithLabel.css';
 
 const InputWithLabel = ({ 
@@ -6,23 +6,16 @@ const InputWithLabel = ({
     givenId,
     givenName,
     handleChange,
+    // focusOnChange,
     children 
 }) => {
     
-    const inputRef = useRef();
-
-    useEffect(() => {
-        inputRef.current.focus();
-        inputRef.current.value= "";
-    }, [givenValue]);
-
- 
 
     return (
         <div className='form__styling'>
             <label htmlFor={givenName} className="label__for__input">{children}</label>
             <input 
-                ref={inputRef}
+                // ref={inputRefTitle}
                 id={givenId} 
                 type="text" 
                 name={givenName} 

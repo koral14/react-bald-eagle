@@ -4,8 +4,9 @@ import './TodoList.css';
   
 var checkmark = '\u2714';
 var remove = '\u2718';
+var edit = '\u2607'
 
-const TodoList = ({ todoList, onRemoveTodo }) => {  
+const TodoList = ({ todoList, onRemoveTodo, onUpdateTodo }) => {  
   return (
     <>
       <table>
@@ -14,6 +15,7 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
             <th>{checkmark}</th>
             <th>Title</th>
             <th>Notes</th>
+            <th>{edit}</th>
             <th>{remove}</th>
           </tr>
           {todoList.map(function(todo) {
@@ -22,6 +24,7 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
                 <TodoListItem 
                   todo={todo} 
                   onRemoveTodo={onRemoveTodo}
+                  onUpdateTodo={onUpdateTodo}
                 />
               </tr>
             )
