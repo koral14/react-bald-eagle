@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TodoListItem from './TodoListItem';
 import './TodoList.css';
+import PropTypes from 'prop-types';
   
 var checkmark = '\u2714';
 var remove = '\u2718';
@@ -34,4 +35,11 @@ const TodoList = ({ todoList, onRemoveTodo, onUpdateTodo }) => {
     </>
   );
 };
+
+TodoList.propTypes = {
+  todoList: PropTypes.array, 
+  onRemoveTodo: PropTypes.func, 
+  onUpdateTodo: PropTypes.func
+}
+
 export default TodoList;

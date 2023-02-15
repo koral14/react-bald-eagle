@@ -1,0 +1,34 @@
+.headerStyled {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    min-width: 19%;
+    /* background-color:cornflowerblue; */
+    /* margin-left: 750px; */
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: larger;
+    text-decoration: none;
+    width: 250px;
+  }
+
+  .headerStyled .link {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .headerStyled img {
+    max-width: 200px;
+    margin-bottom: 50px;
+  }
+
+  .link {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color:antiquewhite;
+    margin: 5px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    
+  }
