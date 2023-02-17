@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
-// import TitleData from "./titleData";
 import PropTypes from 'prop-types';
 
 function AddTodoForm({ onAddTodo }) {
@@ -55,6 +54,7 @@ function AddTodoForm({ onAddTodo }) {
             >
                 Note: 
             </InputWithLabel >
+            <input type="checkbox" />
             <button className={style.form_button}>Add</button>
         </form>
     );

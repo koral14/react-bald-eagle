@@ -107,44 +107,6 @@ const TodoContainer = ({ tableName }) => {
         const data = await res.json();
         return data;
       };
-    
-    // const updateTodo = (todo, callback = function () {console.log('updated')}) => {
-    //     const body = {
-    //       records: [
-    //         {
-    //           id: todo.id,
-    //           fields: {
-    //             Title: todo.title,
-    //             Note: todo.note,
-    //             Completed: todo.completed,
-    //           },
-    //         },
-    //       ],
-    //     };
-    //     const options = {
-    //       method: 'PATCH',
-    //       headers: {
-    //         Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(body),
-    //     };
-        
-    //     fetch(url, options)
-    //       .then((response) => response.json())
-    //       .then((data) => {
-    //         const updatedTodo = {
-    //           id: data.records.id,
-    //           fields: {
-    //             title: data.records.fields.Title,
-    //             note: data.fields.Note,
-    //             completed: data.fields.Completed,
-    //         //   }
-    //         };
-    //         setTodoList([...todoList, updatedTodo]);
-    //         setIsLoading(false);
-    //       })
-    //   }
 
     const ContainersSubComponent = () => {
         

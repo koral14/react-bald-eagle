@@ -26,6 +26,7 @@ const TodoList = ({ todoList, onRemoveTodo, onUpdateTodo }) => {
                   todo={todo} 
                   onRemoveTodo={onRemoveTodo}
                   onUpdateTodo={onUpdateTodo}
+                  defaultTitle={todo.title}
                 />
               </tr>
             )
