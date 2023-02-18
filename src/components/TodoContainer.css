@@ -1,16 +1,16 @@
-.item1 {grid-area: header;}
-.add__form__container {grid-area: main;}
-.item3 {grid-area: right;}
+body {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.app__wrapper {
-    display: grid;
-    grid-template-areas:
-        'header header header header header'
-        'header main main right right';
+.item1 {
+    text-align: center;
+}
 
-    gap: 10px;
-    /* background-color: #2196F3; */
-    padding: 10px;
+.todoList__wrapper {
+    margin: 15px;
 }
 
 button {
@@ -39,10 +39,6 @@ tr td:nth-child(4) {
     padding-bottom: 2rem;
 }
 
-.app__wrapper img {
-    width: 12rem;
-}
-
 .column_headers th {
     font-family: Papyrus, sans-serif;
     letter-spacing: 0.25rem;
@@ -53,18 +49,9 @@ td, th, h1 {
     color: var(--color-dark);
 }
 
-.app__wrapper {
-    margin: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 .add__form__container {
     background-color: #c5decd36;
     margin: 10px;
-    width: 70%;
     padding: 5px;
 }
 
@@ -81,14 +68,13 @@ tbody tr:nth-child(odd) {
     background-color: #b7cece2d;
 }
 
-@media (min-width: 50px) {
+@media (max-width: 250px) {
     .app__wrapper {
-        width: 70%;
+        width: 50%;
         left: 30px
     }
 
     body {
-        font-size: 0.9rem;
         position: absolute;
         right: auto;
         left: 30px;
@@ -99,10 +85,6 @@ tbody tr:nth-child(odd) {
         width: 90px;
     }
 
-    .add__form__container {
-        min-width: 450px;
-       
-    }
     .label__for__input, input {
         max-width: 100px;
         position: absolute;
@@ -111,18 +93,13 @@ tbody tr:nth-child(odd) {
     }
 }
 
-@media (min-width: 375px) {
-    .app__wrapper {
-        width: 70%;
-        left: 30px
-    }
-
+@media (max-width: 375px) {
+    
     body {
-        font-size: 1rem;
         position: absolute;
         right: auto;
         left: 30px;
-        background-color:white;
+        background-color:yellow;
     }
 
     .app__wrapper img {
@@ -140,11 +117,7 @@ tbody tr:nth-child(odd) {
     }
 }
 
-@media (min-width: 480px) {
-    .app__wrapper {
-        width: 80%;
-        align-items: left;
-    }
+@media (max-width: 480px) {
 
     body {
         font-size: 0.8rem;
@@ -160,38 +133,12 @@ tbody tr:nth-child(odd) {
 
     .add__form__container {
         min-width: 450px;
-       
     }
 }
 
-@media (min-width: 768px) {
-    .app__wrapper {
-        width: 90%;
-        align-items: left;
-    }
-
+@media (max-width: 768px) {
     body {
-        font-size: 1.2rem;
         background-color: var(--color-white);
     }
-
-    .app__wrapper img {
-        width: 210px;
-    }
 }
 
-@media (min-width: 880px) {
-    .app__wrapper {
-        width: 90%;
-        margin-left: 210px;
-        align-items: center;
-    }    
-}
-
-@media (min-width: 1366px) {
-    .app__wrapper {
-        width: 100%;
-        margin-left: 350px;
-        align-items: center;
-    }    
-}

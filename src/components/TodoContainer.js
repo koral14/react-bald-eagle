@@ -108,68 +108,29 @@ const TodoContainer = ({ tableName }) => {
         return data;
       };
     
-    // const updateTodo = (todo, callback = function () {console.log('updated')}) => {
-    //     const body = {
-    //       records: [
-    //         {
-    //           id: todo.id,
-    //           fields: {
-    //             Title: todo.title,
-    //             Note: todo.note,
-    //             Completed: todo.completed,
-    //           },
-    //         },
-    //       ],
-    //     };
-    //     const options = {
-    //       method: 'PATCH',
-    //       headers: {
-    //         Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(body),
-    //     };
-        
-    //     fetch(url, options)
-    //       .then((response) => response.json())
-    //       .then((data) => {
-    //         const updatedTodo = {
-    //           id: data.records.id,
-    //           fields: {
-    //             title: data.records.fields.Title,
-    //             note: data.fields.Note,
-    //             completed: data.fields.Completed,
-    //         //   }
-    //         };
-    //         setTodoList([...todoList, updatedTodo]);
-    //         setIsLoading(false);
-    //       })
-    //   }
-
     const ContainersSubComponent = () => {
-        
         return (
             <FieldData.Provider value={{todoList, setTodoList}}>
-                <div className='app__wrapper'>
-                    {/* <img src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676_960_720.png" alt='list'/> */}
-                    <h1 className='item1'>{tableName}</h1>
-                    <div className='add__form__container'>
-                        <AddTodoForm onAddTodo={addTableData}/> 
-                    </div>
-                    {isLoading ? (
-                        <p>Loading...</p>
-                    ) : (
+                <h1 className='item1'>{tableName}</h1>
+                <div className='add__form__container'>
+                    <AddTodoForm onAddTodo={addTableData}/> 
+                </div>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <div className='todoList__wrapper'>
                         <TodoList 
                             todoList={todoList} 
                             onRemoveTodo={removeTodo} 
                             onUpdateTodo={updateTodo}
                             setTodoList={setTodoList}
                         />
-                    )}
-                </div>
+                    </div>  
+                )}
             </FieldData.Provider>
         )
     }
+
     return (
         <>
             <ContainersSubComponent tableName={tableName} />
