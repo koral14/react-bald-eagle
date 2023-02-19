@@ -17,6 +17,7 @@ function AddTodoForm({ onAddTodo }) {
     setTodoNote(newNote);
   }
 
+  // Roy: no reason for this to be async
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     await onAddTodo({ title: todoTitle, note: todoNote, id: Date.now() });
