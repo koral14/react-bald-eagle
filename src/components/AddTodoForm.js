@@ -36,25 +36,27 @@ function AddTodoForm({ onAddTodo }) {
         <form onSubmit={handleFormSubmit} className={style.formStyle}>
             <InputWithLabel 
               refTitleBox={inputRefTitle}
+              required={true}
               givenValue={todoTitle} 
               handleChange={handleTitleChange} 
               givenId="todoTitle"
               givenName="title"
               focusOnChange='title'
-              className={style.formStyle1}
+              className={style.formStyle}
             >
                 Title: 
             </InputWithLabel>
             <InputWithLabel 
               givenValue={todoNote} 
+              required={false}
               handleChange={handleNoteChange} 
               givenId="todoNote"
               givenName="noteDescription"
-              className={style.formStyle2}
+              className={style.formStyle}
             >
                 Note: 
             </InputWithLabel >
-            <input type="checkbox" />
+        
             <button className={style.form_button}>Add</button>
         </form>
     );

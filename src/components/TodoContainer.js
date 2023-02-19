@@ -12,7 +12,7 @@ const TodoContainer = ({ tableName }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchTableData = async () => {
-        const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`, {
+        const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}?sort%5B0%5D%5Bfield%5D=Title`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -22,9 +22,9 @@ const TodoContainer = ({ tableName }) => {
         setTodoList(data.records);
         setIsLoading(false);
 
-        data.records.sort((a, b) => {
-            return b.createdTime.localeCompare(a.createdTime);
-        })
+        // data.records.sort((a, b) => {
+        //     return b.createdTime.localeCompare(a.createdTime);
+        // })
     }
 
     useEffect(() => {
@@ -88,7 +88,6 @@ const TodoContainer = ({ tableName }) => {
     };
         
     const updateTodo = async (editedRow) => {
-        console.log("editedRow is: ", editedRow)
         const res = await fetch(
             `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`,
             {

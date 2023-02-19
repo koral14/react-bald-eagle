@@ -1,22 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import style from './TodoListItem.module.css';
 import FieldData from "./fieldData";
 import PropTypes from 'prop-types';
 
 var remove = '\u2718';
 
-const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => {
+const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo }) => {
     const fieldData = useContext(FieldData);
     const { todoList, setTodoList } = fieldData;
     const rowInfo = todoList.find((todoRow) => todoRow.id === todo.id); 
     const [isEditing, setIsEditing] = useState(false); 
     
-    const [title, setTitle] = useState(defaultTitle);  // why it doesn't work to keep the previous value while edited??
-    const [note, setNote] = useState('');
-    const [completed, setCompleted] = useState(false);
+    // console.log("this is todo: ", todoList)
+    const titleFromAirtable = todo.fields.Title;
+    const [title, setTitle] = useState('' || titleFromAirtable);  
+    const [note, setNote] = useState('' || todo.fields.Note);
+    const [completed, setCompleted] = useState(todo.fields.Completed || false);
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
+    // const removeUpdatedTodo = (id) => {
+    //     console.log("newTodoList:", todoList.filter(rowInfo))
+    //     const newTodoList = todoList.filter(rowInfo);
+        
+    //     setTodoList(newTodoList);
+    // };
+
+    const handleUpdate = async (id) => {
         const updatedRowData = await onUpdateTodo({
             id: todo.id,
             fields: {
@@ -25,119 +33,113 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => 
                 Completed: completed,
             }
         });
-        setTodoList([...updatedRowData.records, ...todoList])
-        setIsEditing(false);
-        // setTitle('');
-        // setNote('');
-    }
-
-    const handleCheckbox = () => {
-        if (completed) {
-            setCompleted(!completed)
-        } else {
-            setCompleted(false);
-        }
+        console.log("what is in updtedRowData: ", todoList)
+        // removeUpdatedTodo(todo.id);
+        // setTodoList([...updatedRowData.records, ...todoList]); 
         
+        // const arr = [];
+        // Object.keys(todoList).forEach(key => arr.push({key: key, value: todoList[key]}))
+        // console.log("this is listJson", arr)
+        setTodoList([...todoList].concat(updatedRowData.records)) //  setTodoList([...todoList].filter(rowInfo).concat(updatedRowData.records)) 
+        //how to remove the rowInfo row before updating the page
+        setIsEditing(false);
+        // console.log("this is newTodoList", updatedRowData);
     }
 
-    // const ifCheckedInAirtable = todo.fields.Completed;
+    // const updatedId = (id) => {
+    //     if (todo.id === id) {
+    //         handleUpdate(id)
+    //     }
+    // }
     
-    const handleCheckAirtable = () => {
-        if(todo.fields.Completed) {
-            setCompleted(true);
-        } else {
-            setCompleted(false);
-        }
-    }
+    // const handleCheckAirtable = async (e, id) => {
+    //     if(!todo.fields.Completed) {
+    //         setCompleted(e.target.checked);
+    //     }
+    //     handleUpdate(id);
+    // }
 
-    if (!rowInfo) return <p>Loading...</p>
+    // if (!rowInfo) return <p>Loading...</p>
+
+    //new key:    key={new Date().getTime()}
 
     return (
         
-        <>      
-                                                                    {/* HERE IS THE checkbox:  */}
-                <td>
-                    {isEditing ? (
-                        <input 
-                            className={style.checkBox} 
-                            id="checkbox" 
-                            type="checkbox" 
-                            checked={completed} 
-                            // onChange={() => onUpdateTodo()}
-                            onChange={handleCheckbox}
-                        />
-                        ) : ( 
-                            <input 
-                                type="checkbox" 
-                                checked={todo.fields.Completed} 
-                                onChange={handleCheckAirtable} 
-                            /> || <input 
-                                type="checkbox" 
-                                checked={completed} 
-                                onChange={(e) => setCompleted(!completed)} 
-                            /> 
-                        )} 
-                </td>
-                                                                        {/* HERE IS THE TITLE:  */}
-                <td className={style.todoListItem}>
-                    {isEditing ? (
-                        <input 
-                            id='todoTitle'
-                            type="text" 
-                            name='todoTitle' 
-                            // placeholder={rowInfo.fields.Title}
-                            value={title} 
-                            onChange={(e) => setTitle(e.target.value)} 
-                        /> 
-                    ) : (
-                        rowInfo.title || todo.fields.Title
-                    )}
-                </td>
-                                                                        {/* HERE IS THE NOTE:  */}
-                <td className={style.todoListItem}>
-                    {isEditing ? (
-                        <input 
-                            id='todoNote'
-                            type="text" 
-                            name='todoNote' 
-                            // placeholder={rowInfo.fields.Note}
-                            value={note} 
-                            onChange={(e) => setNote(e.target.value)} 
-                        /> 
-                    ) : (
-                        rowInfo.note || todo.fields.Note
-                    )}
-                </td>
-                                                                        {/* HERE are 3 buttons:  */}
-                <td>
-                    {isEditing ? (
-                        <button 
-                            className={style.editButton} 
-                            type="button" 
-                            onClick={(e) => handleUpdate(e)}
-                        >
-                            Done
-                        </button>
-                    ) : (
-                        <button 
-                            className={style.editButton} 
-                            type="button"
-                            onClick={() => setIsEditing(true)} 
-                        >
-                            Edit
-                        </button>
-                    )}
-                </td>
-                <td>
+        <Fragment>      
+                                                            {/* HERE IS THE checkbox:  */}
+            <td>
+                {isEditing ? (
+                    <input 
+                        className={style.checkBox} 
+                        id="checkbox" 
+                        type="checkbox" 
+                        checked={completed} 
+                        onChange={() => setCompleted(!completed)}
+                    />
+                    ) 
+                    : ( 
+                        <p>{todo.fields.Completed ? '\u2705' : '\u3192'}</p>
+                    )
+                    } 
+            </td>
+                                                                    {/* HERE IS THE TITLE:  */}
+            <td className={style.todoListItem}>
+                {isEditing ? (
+                    <input 
+                        id='todoTitle'
+                        type="text" 
+                        name='todoTitle' 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                    /> 
+                ) : (
+                    todo.fields.Title
+                )}
+            </td>
+                                                                    {/* HERE IS THE NOTE:  */}
+            <td className={style.todoListItem}>
+                {isEditing ? (
+                    <input 
+                        id='todoNote'
+                        type="text" 
+                        name='todoNote' 
+                        value={note} 
+                        onChange={(e) => setNote(e.target.value)} 
+                    /> 
+                ) : (
+                    todo.fields.Note
+                )}
+            </td>
+                                                                    {/* HERE are 3 buttons:  */}
+            <td>
+                {isEditing ? (
                     <button 
-                        className={style.buttons} 
+                        className={style.editButton} 
                         type="button" 
-                        onClick={() => onRemoveTodo(todo.id)}
+                        onClick={() => handleUpdate(todo.id)}
                     >
-                        {remove}
+                        Done
                     </button>
-                </td>
-        </>
+                ) : (
+                    <button 
+                        className={style.editButton} 
+                        type="button"
+                        onClick={() => setIsEditing(true)} 
+                    >
+                        Edit
+                    </button>
+                )}
+            </td>
+            <td>
+                <button 
+                    className={style.buttons} 
+                    type="button" 
+                    onClick={() => onRemoveTodo(todo.id)}
+                >
+                    {remove}
+                </button>
+            </td>
+        </Fragment>
     );
 };
 
