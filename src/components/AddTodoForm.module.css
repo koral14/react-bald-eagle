@@ -1,3 +1,4 @@
+/* Roy: where are formStyle1 and formStyle2? If unused, remove from AddTodoForm */
 .formStyle {
     margin: 1rem;
     display: flex;
@@ -5,6 +6,8 @@
     flex-direction: column;
 }
 
+/* sticking with a consistent case (camelCase vs snake_case) will */
+/* make it easier to remember value name */ 
 .form_button {
     width: 50px;
     margin-top: 20px;

@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 
 var remove = '\u2718';
 
+/*
+Roy: `todo` should already contain the information used to render the todo. Use context is not needed.
+*/
+
 const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => {
     const fieldData = useContext(FieldData);
     const { todoList, setTodoList } = fieldData;
@@ -15,6 +19,10 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => 
     const [note, setNote] = useState('');
     const [completed, setCompleted] = useState(false);
 
+
+/*
+    Roy: Make sure that you are taking full advantage of React props and callbacks to minimize the amount of logic that you are introducing to the list item. Each list item should only be concerned about its own role in the application. I am seeing logic here that works with the full list. Any work on the full list should be done at TodoList or better, its parent component, TodoContainer. Remember that the changes there are passed back down to its descendent components.
+*/
     const handleUpdate = async (e) => {
         e.preventDefault();
         const updatedRowData = await onUpdateTodo({
@@ -25,7 +33,7 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => 
                 Completed: completed,
             }
         });
-        setTodoList([...updatedRowData.records, ...todoList])
+        setTodoList([...updatedRowData.records, ...todoList]) //Roy: list items should not work with the list
         setIsEditing(false);
         // setTitle('');
         // setNote('');
@@ -52,6 +60,14 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, defaultTitle="" }) => 
 
     if (!rowInfo) return <p>Loading...</p>
 
+    /*
+    Roy: same as in TodoList, convert this into a list item.
+    */
+
+   /*
+    Roy:
+    Also, I see `isEditing` 3 times, and in each you are using similar inputs. You also seem to be repeating a lot of code which should set off alarms that there is a need to refactor. It may be easier to reason with your JSX if you break it into discrete components and use only a single ternary; one component shows of `isEditing` is true and the other when `isEditing` is false
+    */
     return (
         
         <>      

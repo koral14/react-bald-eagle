@@ -1,5 +1,10 @@
 import React from 'react';
 
+/*
+Roy:
+You are using header in the Header component already. This should be a <div> or a <section> instead.
+*/
+
 const Home = () => {
     return (
         <>

@@ -27,6 +27,7 @@ const TodoContainer = ({ tableName }) => {
         })
     }
 
+    //Roy: are you expecting the tableName to change? If not and you are only running useEffect on mount, have an empty dependency array
     useEffect(() => {
         fetchTableData();   
     }, [tableName]);
@@ -37,6 +38,10 @@ const TodoContainer = ({ tableName }) => {
         }
     }, [todoList, isLoading]);
 
+    /*
+    Roy: should this be async as well? Also, the name suggests that you are loading a full table's worth of data and not a single todo.
+    If it were named `addTodo` it would better match in with `removeTodo` and `updateTodo` as they are pretty similar in scope of their behavior.
+    */
     const addTableData = (newRow) => {
         const body = {
         fields: {
@@ -64,7 +69,8 @@ const TodoContainer = ({ tableName }) => {
             setTodoList([...todoList, todo]);
         });
     }
-        
+    
+    //Roy: you could probably combine this with removeTodo unless you are going to be using this function elsewhere. More explanation in fieldData.js
     const deleteTableData = async (id) => {
         const res = await fetch(
         `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}/${id}`,
@@ -108,6 +114,14 @@ const TodoContainer = ({ tableName }) => {
         return data;
       };
 
+    /*
+    Roy: all of this should be in the TodoContainer's jsx. You've inadvertently created a new component within a component. 
+    The `<div className='app__wrapper'>` and its contents can go into the return statement for TodoContainer. This will save 
+    approx 6 lines of code and make your application easier to read about.
+    */
+    /*
+    Roy: You should not be using createContext. More info in fieldData.js.
+    */
     const ContainersSubComponent = () => {
         
         return (

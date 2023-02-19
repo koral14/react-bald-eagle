@@ -43,6 +43,7 @@ tr td:nth-child(4) {
     width: 12rem;
 }
 
+/*Roy: other places in this file you are using __ in your class names. Other css files are using different conventions too. Varying your conventions makes it harder to remember class names as you are trying to reference them. */
 .column_headers th {
     font-family: Papyrus, sans-serif;
     letter-spacing: 0.25rem;

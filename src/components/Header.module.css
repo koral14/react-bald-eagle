@@ -1,5 +1,5 @@
 .headerStyled {
-    list-style-type: none;
+    list-style-type: none; /* Roy: only used on <ul> or <ol> */
     margin: 0;
     padding: 10px;
     min-width: 19%;
@@ -10,6 +10,7 @@
     width: 250px;
   }
 
+  /*Roy: Not needed- already specified in `.link`. You are also specifying styles in `.headerStyle` (font-family, font-size) that you are immediatly setting again in `.link`*/
   .headerStyled .link {
     font-family: "Poppins", sans-serif;
   }
@@ -20,7 +21,7 @@
   }
 
   .link {
-    display: flex;
+    display: flex; /*Roy: flex and flex-direction is a property that you place on an element that contain 1 or more other child elements that you wish to lay out with flex rather than the default block layout. `.link` elements in Header.js do not contain any children */
     flex-direction: column;
     padding: 10px;
     background-color:antiquewhite;
