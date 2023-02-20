@@ -8,6 +8,7 @@ const InputWithLabel = ({
     givenName,
     handleChange,
     refTitleBox,
+    ifRequiredOrNot,
     children 
 }) => {
     
@@ -21,7 +22,7 @@ const InputWithLabel = ({
                 name={givenName} 
                 value={givenValue} 
                 onChange={handleChange} 
-                required={true}
+                required={ifRequiredOrNot}
                 placeholder="type here..."
                 className={style.inputs}
             /> 

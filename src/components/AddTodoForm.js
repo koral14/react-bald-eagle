@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
-// import TitleData from "./titleData";
 import PropTypes from 'prop-types';
 
-function AddTodoForm({ onAddTodo }) {
+function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
   const [todoTitle, setTodoTitle] = useState(''); 
   const [todoNote, setTodoNote] = useState('');
 
@@ -20,7 +19,8 @@ function AddTodoForm({ onAddTodo }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    await onAddTodo({ title: todoTitle, note: todoNote, id: Date.now() });
+    const newTodo = await onAddTodo({ Title: todoTitle, Note: todoNote });
+    setTodoList([...newTodo.records, ...todoList])
     setTodoTitle('');
     setTodoNote('');
   }
@@ -42,6 +42,7 @@ function AddTodoForm({ onAddTodo }) {
               givenId="todoTitle"
               givenName="title"
               focusOnChange='title'
+              ifRequiredOrNot={true}
               className={style.formStyle1}
             >
                 Title: 
@@ -51,6 +52,7 @@ function AddTodoForm({ onAddTodo }) {
               handleChange={handleNoteChange} 
               givenId="todoNote"
               givenName="noteDescription"
+              ifRequiredOrNot={false}
               className={style.formStyle2}
             >
                 Note: 

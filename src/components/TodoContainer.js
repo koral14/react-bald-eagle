@@ -2,7 +2,6 @@ import React, { useState, useEffect }  from 'react';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import './TodoContainer.css';
-import FieldData from './fieldData';
 import PropTypes from 'prop-types';
 
 const TodoContainer = ({ tableName }) => {
@@ -12,7 +11,7 @@ const TodoContainer = ({ tableName }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchTableData = async () => {
-        const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`, {
+        const response = await fetch(`${url}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -21,10 +20,6 @@ const TodoContainer = ({ tableName }) => {
         const data = await response.json();
         setTodoList(data.records);
         setIsLoading(false);
-
-        data.records.sort((a, b) => {
-            return b.createdTime.localeCompare(a.createdTime);
-        })
     }
 
     useEffect(() => {
@@ -37,33 +32,29 @@ const TodoContainer = ({ tableName }) => {
         }
     }, [todoList, isLoading]);
 
-    const addTableData = (newRow) => {
-        const body = {
-        fields: {
-            Title: newRow.title,
-            Note: newRow.note,
-            Completed: newRow.completed,
-        },
-        };
-        const options = {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-        };
-        const todo = {};
-        fetch(url, options)
-        .then((response) => response.json())
-        .then((data) => {
-            todo.id = data.id;
-            todo.title = data.fields.Title;
-            todo.note = data.fields.Note;
-            todo.completed = data.fields.Completed;
-            setTodoList([...todoList, todo]);
-        });
-    }
+    const addTableData = async (newFields) => {
+        const res = await fetch(
+            `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    records: [
+                        {
+                            fields: {
+                                ...newFields,
+                            },
+                        },
+                    ],
+                }),
+            }
+        );
+        const data = await res.json();
+        return data;
+    };
         
     const deleteTableData = async (id) => {
         const res = await fetch(
@@ -110,10 +101,10 @@ const TodoContainer = ({ tableName }) => {
     
     const ContainersSubComponent = () => {
         return (
-            <FieldData.Provider value={{todoList, setTodoList}}>
+           <>
                 <h1 className='item1'>{tableName}</h1>
                 <div className='add__form__container'>
-                    <AddTodoForm onAddTodo={addTableData}/> 
+                    <AddTodoForm onAddTodo={addTableData} todoList={todoList} setTodoList={setTodoList}/> 
                 </div>
                 {isLoading ? (
                     <p>Loading...</p>
@@ -127,7 +118,7 @@ const TodoContainer = ({ tableName }) => {
                         />
                     </div>  
                 )}
-            </FieldData.Provider>
+            </>
         )
     }
 
