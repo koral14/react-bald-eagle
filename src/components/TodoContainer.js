@@ -12,7 +12,7 @@ const TodoContainer = ({ tableName }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchTableData = async () => {
-        const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}?sort%5B0%5D%5Bfield%5D=Title`, {
+        const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -22,14 +22,20 @@ const TodoContainer = ({ tableName }) => {
         setTodoList(data.records);
         setIsLoading(false);
 
-        // data.records.sort((a, b) => {
-        //     return b.createdTime.localeCompare(a.createdTime);
-        // })
+        data.records.sort((objectA, objectB) => {
+            if(objectA < objectB) {
+                return -1;
+            } else if (objectA = objectB) {
+                return 0;
+            } else if (objectA > objectB) {
+                return 1;
+            }
+        })
     }
 
     useEffect(() => {
         fetchTableData();   
-    }, [tableName]);
+    }, [tableName, isLoading]); // added isLoading as second dependancy array
 
     useEffect(() => {
         if(!isLoading) {
@@ -37,7 +43,7 @@ const TodoContainer = ({ tableName }) => {
         }
     }, [todoList, isLoading]);
 
-    const addTableData = (newRow) => {
+    const addTableData2 = (newRow) => {
         const body = {
         fields: {
             Title: newRow.title,
@@ -64,7 +70,33 @@ const TodoContainer = ({ tableName }) => {
             setTodoList([...todoList, todo]);
         });
     }
+
         
+    const addTableData = async (newFields) => {
+        const res = await fetch(
+            `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    records: [
+                        {
+                            fields: {
+                                ...newFields,
+                            },
+                        },
+                    ],
+                }),
+            }
+        );
+        const data = await res.json();
+        console.log('this is data in api request', data)
+        return data;
+    };
+
     const deleteTableData = async (id) => {
         const res = await fetch(
         `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}/${id}`,

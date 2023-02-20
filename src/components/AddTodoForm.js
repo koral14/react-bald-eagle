@@ -19,7 +19,8 @@ function AddTodoForm({ onAddTodo }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    await onAddTodo({ title: todoTitle, note: todoNote, id: Date.now() });
+    console.log("this is the event in addTodo function new:", event)
+    await onAddTodo({Title: todoTitle, Note: todoNote});
     setTodoTitle('');
     setTodoNote('');
   }
@@ -36,7 +37,7 @@ function AddTodoForm({ onAddTodo }) {
         <form onSubmit={handleFormSubmit} className={style.formStyle}>
             <InputWithLabel 
               refTitleBox={inputRefTitle}
-              required={true}
+              isThisrequired={true}
               givenValue={todoTitle} 
               handleChange={handleTitleChange} 
               givenId="todoTitle"
@@ -48,7 +49,7 @@ function AddTodoForm({ onAddTodo }) {
             </InputWithLabel>
             <InputWithLabel 
               givenValue={todoNote} 
-              required={false}
+              isThisrequired={false}
               handleChange={handleNoteChange} 
               givenId="todoNote"
               givenName="noteDescription"

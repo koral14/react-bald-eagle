@@ -8,7 +8,7 @@ var remove = '\u2718';
 const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo }) => {
     const fieldData = useContext(FieldData);
     const { todoList, setTodoList } = fieldData;
-    const rowInfo = todoList.find((todoRow) => todoRow.id === todo.id); 
+    // const rowInfo = todoList.find((todoRow) => todoRow.id === todo.id); 
     const [isEditing, setIsEditing] = useState(false); 
     
     const [title, setTitle] = useState('' || todo.fields.Title);  
