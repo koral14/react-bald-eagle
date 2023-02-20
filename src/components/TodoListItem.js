@@ -11,18 +11,9 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo }) => {
     const rowInfo = todoList.find((todoRow) => todoRow.id === todo.id); 
     const [isEditing, setIsEditing] = useState(false); 
     
-    // console.log("this is todo: ", todoList)
-    const titleFromAirtable = todo.fields.Title;
-    const [title, setTitle] = useState('' || titleFromAirtable);  
+    const [title, setTitle] = useState('' || todo.fields.Title);  
     const [note, setNote] = useState('' || todo.fields.Note);
     const [completed, setCompleted] = useState(todo.fields.Completed || false);
-
-    // const removeUpdatedTodo = (id) => {
-    //     console.log("newTodoList:", todoList.filter(rowInfo))
-    //     const newTodoList = todoList.filter(rowInfo);
-        
-    //     setTodoList(newTodoList);
-    // };
 
     const handleUpdate = async (id) => {
         const updatedRowData = await onUpdateTodo({
