@@ -3,7 +3,7 @@ import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
 import PropTypes from 'prop-types';
 
-function AddTodoForm({ onAddTodo }) {
+function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
   const [todoTitle, setTodoTitle] = useState(''); 
   const [todoNote, setTodoNote] = useState('');
 
@@ -19,8 +19,8 @@ function AddTodoForm({ onAddTodo }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("this is the event in addTodo function new:", event)
-    await onAddTodo({Title: todoTitle, Note: todoNote});
+    const newTodo = await onAddTodo({Title: todoTitle, Note: todoNote});
+    setTodoList([...newTodo.records, ...todoList])
     setTodoTitle('');
     setTodoNote('');
   }

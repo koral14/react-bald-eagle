@@ -7,7 +7,7 @@ var checkmark = '\u2714';
 var remove = '\u2718';
 var edit = '\u2607'
 
-const TodoList = ({ todoList, onRemoveTodo, onUpdateTodo }) => {  
+const TodoList = ({ todoList, setTodoList, onRemoveTodo, onUpdateTodo }) => {  
   return (
     <>
       <table>
@@ -24,6 +24,8 @@ const TodoList = ({ todoList, onRemoveTodo, onUpdateTodo }) => {
               <tr key={todo.id}>
                 <TodoListItem 
                   todo={todo} 
+                  todoList={todoList}
+                  setTodoList={setTodoList}
                   onRemoveTodo={onRemoveTodo}
                   onUpdateTodo={onUpdateTodo}
                   defaultTitle={todo.title}
