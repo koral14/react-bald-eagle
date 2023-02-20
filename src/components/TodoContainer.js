@@ -71,7 +71,7 @@ const TodoContainer = ({ tableName }) => {
         });
     }
 
-        
+     
     const addTableData = async (newFields) => {
         const res = await fetch(
             `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`,
