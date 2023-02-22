@@ -10,6 +10,7 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, todoList, setTodoList 
     const [note, setNote] = useState('' || todo.fields.Note);
     const [completed, setCompleted] = useState(todo.fields.Completed || false);
 
+    
     const handleUpdate = async (id) => {
         const updatedRowData = await onUpdateTodo({
             id: todo.id,
@@ -19,7 +20,16 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, todoList, setTodoList 
                 Completed: completed,
             }
         });
-        setTodoList([...updatedRowData.records, ...todoList])
+        const filteredTheUpdatedRowList = todoList.filter((todo) => todo.id !== id)
+        
+        const filteredAndUpdated = ([...updatedRowData.records, ...filteredTheUpdatedRowList]);
+
+        filteredAndUpdated.sort((objectA, objectB) => {
+            if (objectA.fields.Title < objectB.fields.Title) return -1;
+            else if (objectA.fields.Title > objectB.fields.Title) return 1;
+            else return 0;  
+        });
+        setTodoList(filteredAndUpdated);
         setIsEditing(false);
     }
 

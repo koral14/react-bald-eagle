@@ -10,8 +10,9 @@ const TodoContainer = ({ tableName }) => {
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    // ?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc // this works with sorting the Airtable - unnecessary because I have JS sorting already
     const fetchTableData = async () => {
-        const response = await fetch(`${url}?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc`, {
+        const response = await fetch(`${url}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -22,18 +23,22 @@ const TodoContainer = ({ tableName }) => {
         setIsLoading(false);
 
         data.records.sort((objectA, objectB) => {
-            // A < B ? 1 : -1;
-            // A = B ? 1 : 0;
-            // A > B ? 1 : 1;
-            if (objectA < objectB) return -1;
-            if (objectA = objectB) return 0;
-            if (objectA > objectB) return 1;
+            if (objectA.fields.Title < objectB.fields.Title) return -1;
+            else if (objectA.fields.Title > objectB.fields.Title) return 1;
+            else return 0;  
         })
+
+        // reverse sorting
+        // data.records.sort((objectA, objectB) => {
+        //     if (objectA.fields.Title < objectB.fields.Title) return 1;
+        //     else if (objectA.fields.Title > objectB.fields.Title) return -1;
+        //     else return 0;  
+        // })
     }
 
     useEffect(() => {
         fetchTableData();   
-    }, [tableName, isLoading]); // added isLoading as second dependancy array
+    }, [tableName, isLoading]); 
 
     useEffect(() => {
         if(!isLoading) {
@@ -62,7 +67,6 @@ const TodoContainer = ({ tableName }) => {
             }
         );
         const data = await res.json();
-        console.log('this is data in api request', data)
         return data;
     };
 
@@ -105,6 +109,13 @@ const TodoContainer = ({ tableName }) => {
             }
         );
         const data = await res.json();
+
+        data.records.sort((objectA, objectB) => {
+            if (objectA.fields.Title < objectB.fields.Title) return -1;
+            else if (objectA.fields.Title > objectB.fields.Title) return 1;
+            else return 0;  
+        })
+        
         return data;
       };
 
@@ -112,7 +123,6 @@ const TodoContainer = ({ tableName }) => {
         
         return (
             <div className='app__wrapper'>
-                {/* <img src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676_960_720.png" alt='list'/> */}
                 <h1 className='item1'>{tableName}</h1>
                 <div className='add__form__container'>
                     <AddTodoForm onAddTodo={addTableData} todoList={todoList} setTodoList={setTodoList} /> 
