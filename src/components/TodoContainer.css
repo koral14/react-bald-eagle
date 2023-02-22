@@ -19,7 +19,7 @@ button {
     font-family: "Poppins", sans-serif;
     padding: 0.15rem 0.5rem;
     border-radius: 1.5rem;
-    background-color: #3E505B;
+    background-color: red;
     color: var(--color-white);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -33,10 +33,6 @@ button:hover {
 
 tr td:nth-child(4) {
     width: 6.5rem;
-}
-
-.app__wrapper {
-    padding-bottom: 2rem;
 }
 
 .column_headers th {
@@ -69,20 +65,12 @@ tbody tr:nth-child(odd) {
 }
 
 @media (max-width: 250px) {
-    .app__wrapper {
-        width: 50%;
-        left: 30px
-    }
 
     body {
         position: absolute;
         right: auto;
         left: 30px;
         background-color:white;
-    }
-
-    .app__wrapper img {
-        width: 90px;
     }
 
     .label__for__input, input {
@@ -100,10 +88,6 @@ tbody tr:nth-child(odd) {
         right: auto;
         left: 30px;
         background-color:yellow;
-    }
-
-    .app__wrapper img {
-        width: 90px;
     }
 
     .add__form__container {
@@ -125,10 +109,6 @@ tbody tr:nth-child(odd) {
         right: auto;
         left: 28px;
         background-color:white;
-    }
-
-    .app__wrapper img {
-        width: 110px;
     }
 
     .add__form__container {
