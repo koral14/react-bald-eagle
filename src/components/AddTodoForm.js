@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Children } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
 import PropTypes from 'prop-types';
@@ -90,10 +90,18 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
           {toggleAscDescSorting ? (
             <button onClick={handleDescending}>Descending</button>
           ) : (
-            <button onClick={() => setToggleAscDescSorting(true)}>Ascending</button>
+            <button onClick={handleAscending}>Ascending</button>
           )
           }
         </div>
+        {Children === 'Ascending' ? (
+          <button onClick={handleDescending}>Descending</button>
+        ) : (
+          <button onClick={handleAscending}>Ascending</button>
+        )
+        }
+        
+        
       </>
     );
 };
