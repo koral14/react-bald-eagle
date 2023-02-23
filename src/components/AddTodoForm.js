@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, Children } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 
 function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
@@ -8,28 +9,49 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
   const [todoNote, setTodoNote] = useState('');
   const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
 
+  const [sortCategory, setSortCategory] = useState(null);
+  let sortedTitles = [[...todoList]]
+
   const handleDescending = () => {
-    console.log('this is descending', toggleAscDescSorting)
+    // console.log('this is descending', toggleAscDescSorting)
     const listToBeSorted = ([...todoList]);
     listToBeSorted.sort((a, b) => {
       return b.createdTime.localeCompare(a.createdTime); 
     });
     setTodoList(listToBeSorted);
     setToggleAscDescSorting(true);
-    console.log('this is descending2', toggleAscDescSorting)
+    // console.log('this is descending2', toggleAscDescSorting)
   }
 
   const handleAscending = () => {
     
-    console.log("this is ascending", toggleAscDescSorting)
+    // console.log("this is ascending", toggleAscDescSorting)
     const listToBeSorted = ([...todoList]);
-    console.log('list to be sorted: ', listToBeSorted)
     listToBeSorted.sort((a, b) => {
       return a.createdTime.localeCompare(b.createdTime);  
     });
     setTodoList(listToBeSorted);
-    setToggleAscDescSorting(false);
+    setToggleAscDescSorting(true);
   }
+
+  const sortCategories = [
+    {
+      label: 'Ascending',
+      sortMethod: () => {
+        sortedTitles.sort((titleA, titleB) => {
+          return titleB.createdTime.localeCompare(titleA.createdTime); 
+        });
+      }
+    },
+    {
+      label: 'Descending',
+      sortMethod: () => {
+        sortedTitles.sort((titleA, titleB) => {
+          return titleA.createdTime.localeCompare(titleB.createdTime); 
+        });
+      }
+    }
+  ]
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -94,13 +116,12 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
           )
           }
         </div>
-        {Children === 'Ascending' ? (
-          <button onClick={handleDescending}>Descending</button>
-        ) : (
-          <button onClick={handleAscending}>Ascending</button>
-        )
-        }
         
+        <Select
+          value={sortCategory}
+          onChange={(option) => setSortCategory(option)}
+          options={sortCategories}
+        />
         
       </>
     );
