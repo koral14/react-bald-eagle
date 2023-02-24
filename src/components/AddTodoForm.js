@@ -1,58 +1,12 @@
-import React, { useState, useRef, useEffect, Children } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 
 function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
   const [todoTitle, setTodoTitle] = useState(''); 
   const [todoNote, setTodoNote] = useState('');
-  const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
-
-  const [sortCategory, setSortCategory] = useState(null);
-  let sortedTitles = [[...todoList]]
-
-  const handleDescending = () => {
-    // console.log('this is descending', toggleAscDescSorting)
-    const listToBeSorted = ([...todoList]);
-    listToBeSorted.sort((a, b) => {
-      return b.createdTime.localeCompare(a.createdTime); 
-    });
-    setTodoList(listToBeSorted);
-    setToggleAscDescSorting(true);
-    // console.log('this is descending2', toggleAscDescSorting)
-  }
-
-  const handleAscending = () => {
-    
-    // console.log("this is ascending", toggleAscDescSorting)
-    const listToBeSorted = ([...todoList]);
-    listToBeSorted.sort((a, b) => {
-      return a.createdTime.localeCompare(b.createdTime);  
-    });
-    setTodoList(listToBeSorted);
-    setToggleAscDescSorting(true);
-  }
-
-  const sortCategories = [
-    {
-      label: 'Ascending',
-      sortMethod: () => {
-        sortedTitles.sort((titleA, titleB) => {
-          return titleB.createdTime.localeCompare(titleA.createdTime); 
-        });
-      }
-    },
-    {
-      label: 'Descending',
-      sortMethod: () => {
-        sortedTitles.sort((titleA, titleB) => {
-          return titleA.createdTime.localeCompare(titleB.createdTime); 
-        });
-      }
-    }
-  ]
-
+  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const newTodo = await onAddTodo({Title: todoTitle, Note: todoNote});
@@ -105,24 +59,7 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
                 Note: 
             </InputWithLabel >
             <button className={style.form_button}>Add</button>
-        </form>
-        {/* still working on this button to set it to reverse sorting */}
-        <div>
-          <label>Sorted by created time:</label> 
-          {toggleAscDescSorting ? (
-            <button onClick={handleDescending}>Descending</button>
-          ) : (
-            <button onClick={handleAscending}>Ascending</button>
-          )
-          }
-        </div>
-        
-        <Select
-          value={sortCategory}
-          onChange={(option) => setSortCategory(option)}
-          options={sortCategories}
-        />
-        
+        </form>    
       </>
     );
 };

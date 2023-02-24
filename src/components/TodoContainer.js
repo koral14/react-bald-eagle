@@ -3,6 +3,7 @@ import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import './TodoContainer.css';
 import PropTypes from 'prop-types';
+import SortingToggle from './sortingToggle';
 
 const TodoContainer = ({ tableName }) => {
     const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`
@@ -27,13 +28,6 @@ const TodoContainer = ({ tableName }) => {
             else if (objectA.fields.Title > objectB.fields.Title) return 1;
             else return 0;  
         })
-
-        // reverse sorting
-        // data.records.sort((objectA, objectB) => {
-        //     if (objectA.fields.Title < objectB.fields.Title) return 1;
-        //     else if (objectA.fields.Title > objectB.fields.Title) return -1;
-        //     else return 0;  
-        // })
     }
 
     useEffect(() => {
@@ -127,6 +121,7 @@ const TodoContainer = ({ tableName }) => {
                 <div className='add__form__container'>
                     <AddTodoForm onAddTodo={addTableData} todoList={todoList} setTodoList={setTodoList} /> 
                 </div>
+                <SortingToggle todoList={todoList} setTodoList={setTodoList} />
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
