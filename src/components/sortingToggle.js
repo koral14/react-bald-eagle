@@ -4,7 +4,6 @@ const SortingToggle = ({ todoList, setTodoList }) => {
     const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
     const listToBeSorted = ([...todoList]);
     console.log("toggle line 6", toggleAscDescSorting)
-    // console.log("list to be s", listToBeSorted)
 
     const handleSortArcDesc = (e) => {
         if (toggleAscDescSorting) {
