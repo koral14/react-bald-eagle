@@ -5,7 +5,19 @@ import style from './AddTodoForm.module.css';
 function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
     const [todoTitle, setTodoTitle] = useState('');
     const [todoNote, setTodoNote] = useState(''); 
+
+    const [toggleAscendingDescending, setToggleAscendingDescending] = useState(false);
+
+    const handleDescending = () => {
+      console.log('yes', toggleAscendingDescending);
+      setToggleAscendingDescending(true);
+    }
     
+    const handleAscending = () => {
+      console.log('no', toggleAscendingDescending);
+      setToggleAscendingDescending(false);
+    }
+
     const handleTitleChange = (e) => {
       const newTitle = e.target.value;
       setTodoTitle(newTitle);
@@ -33,6 +45,7 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
       }, [todoTitle]);
 
     return (
+      <>
       <form onSubmit={handleFormSubmit} className={style.formStyle}>
         <InputWithLabel 
           refTitleBox={inputRefTitle}
@@ -58,6 +71,17 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList }) {
         </InputWithLabel >
         <button className={style.form_button}>Add</button>
       </form>
+
+        <div>
+            <label>Sorted by created time:</label> 
+            {toggleAscendingDescending ? (
+              <button onClick={handleAscending}>Descending</button>
+            ) : (
+              <button onClick={handleDescending}>Ascending</button>
+            )
+            }
+        </div>
+      </>
     );
 };
 
