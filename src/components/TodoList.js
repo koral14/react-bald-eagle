@@ -1,11 +1,13 @@
 import * as React from 'react';
 import TodoListItem from './TodoListItem';
 import './TodoList.css';
+import PropTypes from 'prop-types';
   
 var checkmark = '\u2714';
 var remove = '\u2718';
+var edit = '\u2607'
 
-const TodoList = ({ todoList, onRemoveTodo }) => {  
+const TodoList = ({ todoList, setTodoList, onRemoveTodo, onUpdateTodo }) => {  
   return (
     <>
       <table>
@@ -14,6 +16,7 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
             <th>{checkmark}</th>
             <th>Title</th>
             <th>Notes</th>
+            <th>{edit}</th>
             <th>{remove}</th>
           </tr>
           {todoList.map(function(todo) {
@@ -21,7 +24,11 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
               <tr key={todo.id}>
                 <TodoListItem 
                   todo={todo} 
+                  todoList={todoList}
+                  setTodoList={setTodoList}
                   onRemoveTodo={onRemoveTodo}
+                  onUpdateTodo={onUpdateTodo}
+                  defaultTitle={todo.title}
                 />
               </tr>
             )
@@ -31,4 +38,11 @@ const TodoList = ({ todoList, onRemoveTodo }) => {
     </>
   );
 };
+
+TodoList.propTypes = {
+  todoList: PropTypes.array, 
+  onRemoveTodo: PropTypes.func, 
+  onUpdateTodo: PropTypes.func
+}
+
 export default TodoList;
