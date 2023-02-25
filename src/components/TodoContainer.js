@@ -3,13 +3,13 @@ import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import './TodoContainer.css';
 import PropTypes from 'prop-types';
-import SortingToggle from './sortingToggle';
 
 const TodoContainer = ({ tableName }) => {
     const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`
 
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
 
     // ?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc // this works with sorting the Airtable - unnecessary because I have JS sorting already
     const fetchTableData = async () => {
@@ -119,9 +119,14 @@ const TodoContainer = ({ tableName }) => {
             <div className='app__wrapper'>
                 <h1 className='item1'>{tableName}</h1>
                 <div className='add__form__container'>
-                    <AddTodoForm onAddTodo={addTableData} todoList={todoList} setTodoList={setTodoList} /> 
+                    <AddTodoForm 
+                        onAddTodo={addTableData} 
+                        todoList={todoList} 
+                        setTodoList={setTodoList} 
+                        toggleAscDescSorting={toggleAscDescSorting}
+                        setToggleAscDescSorting={setToggleAscDescSorting}
+                    /> 
                 </div>
-                <SortingToggle todoList={todoList} setTodoList={setTodoList} />
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (

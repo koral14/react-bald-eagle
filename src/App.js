@@ -12,7 +12,6 @@ function App() {
         <Route path='/' exact element={<Home />} />
         <Route path='/ltg' exact element={<TodoContainer tableName="Long Term Goals" />} />
         <Route path='/stg' exact element={<TodoContainer tableName="Short Term Goals" />} />
-        <Route path='/new' exact element={<h1>New Todo List</h1>} />
       </Routes>
   </BrowserRouter>
   );
