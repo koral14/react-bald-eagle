@@ -5,7 +5,7 @@ body {
     align-items: center;
 }
 
-.item1 {
+.h1__todoContainer {
     text-align: center;
 }
 
@@ -33,10 +33,6 @@ button:hover {
 
 tr td:nth-child(4) {
     width: 6.5rem;
-}
-
-.app__wrapper {
-    padding-bottom: 2rem;
 }
 
 .column_headers th {
@@ -69,11 +65,7 @@ tbody tr:nth-child(odd) {
 }
 
 @media (max-width: 250px) {
-    .app__wrapper {
-        width: 50%;
-        left: 30px
-    }
-
+    
     body {
         position: absolute;
         right: auto;
@@ -105,18 +97,6 @@ tbody tr:nth-child(odd) {
         right: auto;
         left: 28px;
         background-color:white;
-    }
-}
-
-@media (max-width: 610px) {
-    .navBar ul li {
-        font-size: 10px;
-    }
-
-    ul {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
     }
 }
 

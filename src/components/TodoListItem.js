@@ -35,7 +35,7 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, todoList, setTodoList 
     return (
         
         <Fragment>      
-                                                            {/* HERE IS THE checkbox:  */}
+                                                            {/* HERE IS THE CHECKBOX:  */}
             <td className={style.checkBoxReady}>
                 {isEditing ? (
                     <input 
@@ -116,7 +116,9 @@ const TodoListItem = ({ todo, onRemoveTodo, onUpdateTodo, todoList, setTodoList 
 TodoListItem.propTypes = {
     todo: PropTypes.object, 
     onRemoveTodo: PropTypes.func, 
-    onUpdateTodo: PropTypes.func
+    onUpdateTodo: PropTypes.func,
+    todoList: PropTypes.array, 
+    setTodoList: PropTypes.func, 
 }
     
 export default TodoListItem;

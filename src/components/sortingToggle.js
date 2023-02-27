@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const arrowUp = '▲';
 const arrowDown = '▼'
@@ -32,6 +33,13 @@ const SortingToggle = ({ todoList, setTodoList, toggleAscDescSorting, setToggleA
             )}
         </>
     )
+}
+
+SortingToggle.propTypes = {
+    todoList: PropTypes.array, 
+    setTodoList: PropTypes.func,
+    toggleAscDescSorting: PropTypes.bool, 
+    setToggleAscDescSorting: PropTypes.func, 
 }
 
 export default SortingToggle;

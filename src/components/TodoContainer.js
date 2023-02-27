@@ -1,15 +1,12 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useEffect }  from 'react';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import './TodoContainer.css';
+
 import PropTypes from 'prop-types';
 
-const TodoContainer = ({ tableName }) => {
+const TodoContainer = ({ tableName, todoList, setTodoList, toggleAscDescSorting, setToggleAscDescSorting, isLoading, setIsLoading }) => {
     const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`
-
-    const [todoList, setTodoList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
 
     // ?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc // this works with sorting the Airtable - unnecessary because I have JS sorting already
     const fetchTableData = async () => {
@@ -39,30 +36,6 @@ const TodoContainer = ({ tableName }) => {
         localStorage.setItem('savedTodoList', JSON.stringify(todoList));
         }
     }, [todoList, isLoading]);
-     
-    const addTableData = async (newFields) => {
-        const res = await fetch(
-            `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    records: [
-                        {
-                            fields: {
-                                ...newFields,
-                            },
-                        },
-                    ],
-                }),
-            }
-        );
-        const data = await res.json();
-        return data;
-    };
 
     const deleteTableData = async (id) => {
         const res = await fetch(
@@ -116,11 +89,11 @@ const TodoContainer = ({ tableName }) => {
     const ContainersSubComponent = () => {
         
         return (
-            <div className='app__wrapper'>
-                <h1 className='item1'>{tableName}</h1>
+            <>
+                <h1 className='h1__todoContainer'>{tableName}</h1>
                 <div className='add__form__container'>
                     <AddTodoForm 
-                        onAddTodo={addTableData} 
+                        tableName={tableName}
                         todoList={todoList} 
                         setTodoList={setTodoList} 
                         toggleAscDescSorting={toggleAscDescSorting}
@@ -137,7 +110,7 @@ const TodoContainer = ({ tableName }) => {
                         onUpdateTodo={updateTodo}
                     />
                 )}
-            </div>
+            </>
         )
     }
     return (
@@ -149,6 +122,12 @@ const TodoContainer = ({ tableName }) => {
 
 TodoContainer.propTypes = {
     tableName: PropTypes.string,
+    todoList: PropTypes.array,
+    setTodoList: PropTypes.func,
+    toggleAscDescSorting: PropTypes.bool,
+    setToggleAscDescSorting: PropTypes.func,
+    isLoading: PropTypes.bool,
+    setIsLoading: PropTypes.func,
 }
 
 export default TodoContainer;

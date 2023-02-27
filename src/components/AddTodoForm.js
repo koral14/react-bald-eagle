@@ -2,17 +2,18 @@ import React, { useState, useRef, useEffect } from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from './AddTodoForm.module.css';
 import SortingToggle from "./sortingToggle";
+import {addTableData} from './utils';
 import PropTypes from 'prop-types';
 
-const addButton = '➕'
+const addButton = '➕';
 
-function AddTodoForm({ onAddTodo, todoList, setTodoList, toggleAscDescSorting, setToggleAscDescSorting }) {
+function AddTodoForm({ todoList, setTodoList, toggleAscDescSorting, setToggleAscDescSorting, tableName }) {
   const [todoTitle, setTodoTitle] = useState(''); 
   const [todoNote, setTodoNote] = useState('');
   
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const newTodo = await onAddTodo({Title: todoTitle, Note: todoNote});
+    const newTodo = await addTableData(tableName, {Title: todoTitle, Note: todoNote}); // ??????
     const newTodoList = ([...newTodo.records, ...todoList]);
     newTodoList.sort((objectA, objectB) => {
       if (objectA.fields.Title < objectB.fields.Title) return -1;
@@ -39,7 +40,6 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList, toggleAscDescSorting, s
             isThisrequired={true}
             givenValue={todoTitle} 
             handleChange={(e) => setTodoTitle(e.target.value)} 
-            givenId="todoTitle"
             givenName="title"
             focusOnChange='title'
             forPlaceholder="type here..."
@@ -52,7 +52,6 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList, toggleAscDescSorting, s
             givenValue={todoNote} 
             isThisrequired={false}
             handleChange={(e) => setTodoNote(e.target.value)} 
-            givenId="todoNote"
             givenName="noteDescription"
             forPlaceholder="optional notes here..."
             className={style.formStyle}
@@ -72,7 +71,11 @@ function AddTodoForm({ onAddTodo, todoList, setTodoList, toggleAscDescSorting, s
 };
 
 AddTodoForm.propTypes = {
-  onAddTodo: PropTypes.func
+  todoList: PropTypes.array, 
+  setTodoList: PropTypes.func,
+  toggleAscDescSorting: PropTypes.bool, 
+  setToggleAscDescSorting: PropTypes.func, 
+  tableName: PropTypes.string,
 }
 
 export default AddTodoForm;

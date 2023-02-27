@@ -41,6 +41,7 @@ const TodoList = ({ todoList, setTodoList, onRemoveTodo, onUpdateTodo }) => {
 
 TodoList.propTypes = {
   todoList: PropTypes.array, 
+  setTodoList: PropTypes.func,
   onRemoveTodo: PropTypes.func, 
   onUpdateTodo: PropTypes.func
 }

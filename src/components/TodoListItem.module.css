@@ -14,7 +14,6 @@
 }
 
 .buttons {
-    /* background-color: #f07f5a; */
     color: white;
     border-radius: 0.4rem;
     border: 1px solid transparent;
@@ -57,10 +56,6 @@ input.checkBox1 {
     height: 20px;
     box-shadow: 0 0 0 2px black;
     border: 3px solid white;
-}
-
-.checkBox1 td > input:checked {
-    /* background-color: #f07f5a; */
 }
 
 .checkBoxReady {
