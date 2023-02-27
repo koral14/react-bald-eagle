@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 const TodoContainer = ({ tableName, todoList, setTodoList, toggleAscDescSorting, setToggleAscDescSorting, isLoading, setIsLoading }) => {
     const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${tableName}`
 
-    // ?maxRecords=20&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=asc // this works with sorting the Airtable - unnecessary because I have JS sorting already
     const fetchTableData = async () => {
         const response = await fetch(`${url}`, {
         method: 'GET',
