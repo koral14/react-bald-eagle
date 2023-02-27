@@ -1,66 +1,52 @@
-import React, {useState, useEffect} from 'react';
-import TodoList from './TodoList';
-import AddTodoForm from './AddTodoForm';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css';
+import TodoContainer from './components/TodoContainer';
+import Home from './components/Home';
+import Header from './components/Header';
 
 function App() {
-
   const [todoList, setTodoList] = useState([]);
+  const [toggleAscDescSorting, setToggleAscDescSorting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const fetchTableData = async () => {
-    const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-      },
-    });
-    const data = await response.json();
-    setTodoList(data.records);
-    setIsLoading(false);
-  }
-
-  const deleteTableData = async (tableName, recordId) => {
-    const response = await fetch(`https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default/${recordId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-      },
-    });
-    const data = await response.json();
-    return data;
-  }
- 
-  const removeTodo = async (id) => {
-    await deleteTableData('Default', id);
-    const modifiedTodo = todoList.filter(
-      (todo) => todo.id !== id
-    );
-    setTodoList(modifiedTodo);
-  };
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path='/' exact element={
-          <div className='app__wrapper'>
-            <img src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676_960_720.png" alt='list'/>
-            <div className='add__form__container'>
-              <AddTodoForm fetchTableData={fetchTableData} /> 
-              {/* <AddTodoForm onAddTodo={addTodo} /> */}
-            </div>
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-            )
-            }
-          </div>
+          <Home 
+            todoList={todoList} 
+            setTodoList={setTodoList} 
+            toggleAscDescSorting={toggleAscDescSorting} 
+            setToggleAscDescSorting={setToggleAscDescSorting} 
+            isLoading={isLoading} 
+            setIsLoading={setIsLoading} 
+          />
         } />
-        <Route path='/new' exact element={<h1>New Todo List</h1>} />
-      </Routes>  
-    </BrowserRouter>
+        <Route path='/ltg' exact element={
+          <TodoContainer 
+            tableName="Long Term Goals" 
+            todoList={todoList} 
+            setTodoList={setTodoList} 
+            toggleAscDescSorting={toggleAscDescSorting} 
+            setToggleAscDescSorting={setToggleAscDescSorting} 
+            isLoading={isLoading} 
+            setIsLoading={setIsLoading} 
+          />
+        } />
+        <Route path='/stg' exact element={
+          <TodoContainer 
+            tableName="Short Term Goals" 
+            todoList={todoList} 
+            setTodoList={setTodoList} 
+            toggleAscDescSorting={toggleAscDescSorting} 
+            setToggleAscDescSorting={setToggleAscDescSorting} 
+            isLoading={isLoading} 
+            setIsLoading={setIsLoading} 
+          />
+        } />
+      </Routes>
+  </BrowserRouter>
   );
 }
 
