@@ -1,5 +1,5 @@
 td {
-    padding: 0.5rem;
+    /* padding: 0.5rem; */
     padding-right: 1.5rem;
 }
 
@@ -14,3 +14,5 @@ tbody td:nth-child(2) {
 tr {
     margin: 4rem;
 }
+
+

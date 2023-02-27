@@ -66,3 +66,17 @@ input.checkBox1 {
 .doneEditToggle, .removeButton {
    text-align: center;
 }
+
+@media (max-width: 610px) {   
+    .todoListItem input {
+        font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 470px) {
+    
+  }
+  
+  @media (max-width: 270px) {
+    
+  }

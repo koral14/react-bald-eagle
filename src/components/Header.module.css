@@ -21,7 +21,7 @@
 .navBar img {
   width: 150px;
   padding: 0;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-bottom: -40px;
 }
 
@@ -46,7 +46,7 @@ a:hover {
 img {
   max-width: 150px;
   margin-left: 15px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 @media (max-width: 610px) {   
@@ -55,7 +55,7 @@ img {
   }
 
   img {
-    max-width: 50px;
+    max-width: 80px;
   }
 }
 
