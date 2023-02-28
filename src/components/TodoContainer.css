@@ -76,8 +76,6 @@ tbody tr:nth-child(odd) {
     .label__for__input, input {
         max-width: 100px;
         position: absolute;
-        /* left: 0;
-        right: 0; */
     }
 }
 
@@ -93,7 +91,7 @@ tbody tr:nth-child(odd) {
         font-size: 0.8rem;
         position: absolute;
         right: auto;
-        left: 28px;
+        /* left: 28px; */
         background-color:white;
     }
 }

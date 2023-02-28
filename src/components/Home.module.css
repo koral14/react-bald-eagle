@@ -56,8 +56,12 @@ h1 {
 }
 
 @media (max-width: 710px) {   
-    h1{
+    h1 {
         font-size: 1.8rem;
+    }
+
+    .formHome {
+        text-align: left;
     }
 
     .buttonHome {
@@ -69,7 +73,7 @@ h1 {
 
 @media (max-width: 455px) {
     h1{
-        font-size: 1.2rem;
+        text-align: center;
     }
 
     .buttonHome {
@@ -86,7 +90,7 @@ h1 {
         flex-direction: column; 
         align-items: center;
         margin-top: 10px;
-        width: 140%
+        /* width: 140% */
     }
 }
 

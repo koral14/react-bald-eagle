@@ -6,8 +6,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: #3E505B;
-  width: 100%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  /* margin-bottom: 30px; */
 }
 
 .ulLinks {
@@ -21,7 +21,6 @@
 .navBar img {
   width: 150px;
   padding: 0;
-  /* margin-left: 10px; */
   margin-bottom: -40px;
 }
 
